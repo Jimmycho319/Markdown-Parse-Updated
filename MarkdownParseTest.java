@@ -86,20 +86,15 @@ public class MarkdownParseTest {
         List<String> expected = List.of();
         assertEquals(expected,MarkdownParse.getLinks(contents));
     }
-//new test
-    @Test
-    public void testSpaceAfterParen() {
-        String contents = "[title]( space-in-url.com)";
-        List<String> expect = List.of("space-in-url.com");
-        assertEquals(expect, MarkdownParse.getLinks(contents));
 
 
-    // @Test 
-    // public void testGetLinks8() throws IOException{
-    //     String contents = Files.readString(Path.of("C:/Users/jonat/git/markdown-parse/test-file8.md"));
-    //     List<String> expected = List.of();
-    //     assertEquals(expected,MarkdownParse.getLinks(contents));
-    // }
+
+    @Test 
+    public void testGetLinks8() throws IOException{
+        String contents = Files.readString(Path.of("C:/Users/jonat/git/markdown-parse/test-file8.md"));
+        List<String> expected = List.of();
+        assertEquals(expected,MarkdownParse.getLinks(contents));
+    
     }
 
     
