@@ -87,15 +87,12 @@ public class MarkdownParseTest {
         assertEquals(expected,MarkdownParse.getLinks(contents));
     }
 
-
-
-    @Test 
-    public void testGetLinks8() throws IOException{
-        String contents = Files.readString(Path.of("C:/Users/jonat/git/markdown-parse/test-file8.md"));
-        List<String> expected = List.of();
-        assertEquals(expected,MarkdownParse.getLinks(contents));
-    
-    }
+    // @Test 
+    // public void testGetLinks8() throws IOException{
+    //     String contents = Files.readString(Path.of("C:/Users/jonat/git/markdown-parse/test-file8.md"));
+    //     List<String> expected = List.of();
+    //     assertEquals(expected,MarkdownParse.getLinks(contents));
+    // }
 
     
 }
