@@ -9,6 +9,7 @@ import org.junit.*;
 
 public class MarkdownParseTest {
 
+    /*
     @Test //indicates the following method is a junit test
     public void addition() { //method header
         assertEquals(2, 1 + 1); //checking whether the first and second params are equal, fail test if not
@@ -94,5 +95,36 @@ public class MarkdownParseTest {
     //     assertEquals(expected,MarkdownParse.getLinks(contents));
     // }
 
-    
+    */
+
+
+
+
+
+    @Test 
+    public void testSnippet1() throws IOException{
+        String contents = Files.readString(Path.of("./snippet-1.md"));
+        List<String> expected = List.of("'google.com", "google.com", "ucsd.edu");
+        assertEquals(expected,MarkdownParse.getLinks(contents));
+
+    }
+
+    @Test 
+    public void testSnippet2() throws IOException{
+        String contents = Files.readString(Path.of("./snippet-2.md"));
+        List<String> expected = List.of("a.com", "a.com(())", "example.com");
+        assertEquals(expected,MarkdownParse.getLinks(contents));
+
+    }
+
+    @Test 
+    public void testSnippet3() throws IOException{
+        String contents = Files.readString(Path.of("./snippet-3.md"));
+        List<String> expected = List.of("https://www.twitter.com", "https://ucsd-cse15l-w22.github.io/", "https://cse.ucsd.edu/");
+        assertEquals(expected,MarkdownParse.getLinks(contents));
+
+
+
+    }
 }
+
