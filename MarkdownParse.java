@@ -42,6 +42,7 @@ public class MarkdownParse {
 }
 
 */
+
 // File reading code from https://howtodoinjava.com/java/io/java-read-file-to-string-examples/
 import java.io.File;
 import java.io.IOException;
@@ -74,15 +75,19 @@ public class MarkdownParse {
 
     }
     public static Map<String, List<String>> getLinks(File dirOrFile) throws IOException {
+        int counter = 0;
         Map<String, List<String>> result = new HashMap<>();
         if(dirOrFile.isDirectory()) {
             for(File f: dirOrFile.listFiles()) {
+                counter ++;         //tester
                 result.putAll(getLinks(f));
             }
+            System.out.println(counter); //tester
             return result;
         }
         else {
             Path p = dirOrFile.toPath();
+            System.out.println(counter); // remove
             int lastDot = p.toString().lastIndexOf(".");
             if(lastDot == -1 || !p.toString().substring(lastDot).equals(".md")) {
                 return result;
@@ -96,6 +101,7 @@ public class MarkdownParse {
         ArrayList<String> toReturn = new ArrayList<>();
         // find the next [, then find the ], then find the (, then take up to
         // the next )
+        
         int currentIndex = 0;
         while(currentIndex < markdown.length()) {
             int nextOpenBracket = markdown.indexOf("[", currentIndex);
