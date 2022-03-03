@@ -54,7 +54,7 @@ import java.util.List;
 import java.util.Map;
 
 public class MarkdownParse {
-
+    static int counter;
     static int findCloseParen(String markdown, int openParen) {
         int closeParen = openParen + 1;
         int openParenCount = 1;
@@ -75,25 +75,30 @@ public class MarkdownParse {
 
     }
     public static Map<String, List<String>> getLinks(File dirOrFile) throws IOException {
-        int counter = 0;
+        
         Map<String, List<String>> result = new HashMap<>();
         if(dirOrFile.isDirectory()) {
             for(File f: dirOrFile.listFiles()) {
-                counter ++;         //tester
+                //counter ++;         //tester
                 result.putAll(getLinks(f));
             }
-            System.out.println(counter); //tester
+            //System.out.println(counter); //tester
             return result;
         }
         else {
             Path p = dirOrFile.toPath();
-            System.out.println(counter); // remove
+            //System.out.println(counter); // remove
             int lastDot = p.toString().lastIndexOf(".");
             if(lastDot == -1 || !p.toString().substring(lastDot).equals(".md")) {
-                return result;
+                //counter++;
+                return result; //this one
             }
             ArrayList<String> links = getLinks(Files.readString(p));
             result.put(dirOrFile.getPath(), links);
+            System.out.println(result);
+            if(result != List.of()){
+                counter ++;
+            }
             return result;
         }
     }
@@ -134,8 +139,10 @@ public class MarkdownParse {
     }
     public static void main(String[] args) throws IOException {
         Path fileName = Path.of(args[0]);
-        String contents = Files.readString(fileName);
-        ArrayList<String> links = getLinks(contents);
-        System.out.println(links);
+        //String contents = Files.readString(fileName);
+        //ArrayList<String> links = getLinks(contents);
+        getLinks(new File("test-files/"));
+        //System.out.println(links);
+        //System.out.println(counter);
     }
 }
