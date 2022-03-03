@@ -1,3 +1,4 @@
+/*
 import static org.junit.Assert.*;
 
 import java.io.IOException;
@@ -9,7 +10,7 @@ import org.junit.*;
 
 public class MarkdownParseTest {
 
-    /*
+    
     @Test //indicates the following method is a junit test
     public void addition() { //method header
         assertEquals(2, 1 + 1); //checking whether the first and second params are equal, fail test if not
@@ -101,30 +102,51 @@ public class MarkdownParseTest {
 
 
 
-    @Test 
-    public void testSnippet1() throws IOException{
-        String contents = Files.readString(Path.of("./snippet-1.md"));
-        List<String> expected = List.of("'google.com", "google.com", "ucsd.edu");
-        assertEquals(expected,MarkdownParse.getLinks(contents));
+import static org.junit.Assert.*;
+import org.junit.*;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.List;
+
+public class MarkdownParseTest {
+    @Test
+    public void testFile1() throws IOException {
+        String contents= Files.readString(Path.of("./test-file.md"));
+        List<String> expect = List.of("https://something.com", "some-page.html");
+        assertEquals(MarkdownParse.getLinks(contents), expect);
+    }
+    
+    @Test
+    public void testFile2() throws IOException {
+        String contents= Files.readString(Path.of("./test-file2.md"));
+        List<String> expect = List.of("https://something.com", "some-page.html");
+        assertEquals(MarkdownParse.getLinks(contents), expect);
     }
 
-    @Test 
-    public void testSnippet2() throws IOException{
-        String contents = Files.readString(Path.of("./snippet-2.md"));
-        List<String> expected = List.of("a.com", "a.com(())", "example.com");
-        assertEquals(expected,MarkdownParse.getLinks(contents));
-
+    @Test
+    public void testMissingCloseParen() {
+        String contents= "[link title](a.com";
+        List<String> expect = List.of();
+        assertEquals(MarkdownParse.getLinks(contents), expect);
     }
 
-    @Test 
-    public void testSnippet3() throws IOException{
-        String contents = Files.readString(Path.of("./snippet-3.md"));
-        List<String> expected = List.of("https://www.twitter.com", "https://ucsd-cse15l-w22.github.io/", "https://cse.ucsd.edu/");
-        assertEquals(expected,MarkdownParse.getLinks(contents));
-
-
-
+    @Test
+    public void testSpaceAroundLink() {
+        String contents= "[link title](   a.com   )";
+        List<String> expect = List.of("a.com");
+        assertEquals(expect, MarkdownParse.getLinks(contents));
     }
+
+    @Test
+    public void testNestedParens() throws IOException {
+        String contents = Files.readString(Path.of("test-parens-inside-link.md"));
+        List<String> expect = List.of("something.com()", "something.com((()))", "something.com", "boring.com");
+        assertEquals(expect, MarkdownParse.getLinks(contents));
+    }
+
 }
+
+
 
